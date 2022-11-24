@@ -1,0 +1,263 @@
+/* --------------------------------------------------- */
+/* ---------------- CSS FRAMEWORK ---------------- */
+/* --------------------------------------------------- */
+
+
+/* ---------------- GLOBAL STYLES---------------- */
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /*Default to a rounder font*/
+}
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* ---------------- TYPOGRAPHY ---------------- */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0; /*This was used to allow for more control over the default HTML*/
+}
+a {
+    text-decoration: none; /*Remove underlines from anchors*/
+}
+
+/* ---------------- LINE SEPORATOR ---------------- */
+.line-seperator {
+    overflow: hidden;
+    text-align: center;
+}
+.line-seperator:before,
+.line-seperator:after {
+ background-color: white;
+ content: "";
+ display: inline-block;
+ height: 1px;
+ position: relative;
+ vertical-align: middle;
+ width: 20%;
+ margin: 20px 0;
+}
+.line-seperator:before {
+ right: 0.5em;
+ margin-left: -50%;
+}
+.line-seperator:after {
+ left: 0.5em;
+ margin-right: -50%;
+}
+
+
+/* ---------------- BUTTONS ---------------- */
+/* Base class */
+.btn {
+    display: inline-block;
+    text-align: center;
+    border: solid 1px transparent;
+    padding: 8px;
+    border-radius: 5px;
+}
+/* Add for different uses */
+.btn-primary {
+    color: white;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-secondary {
+    color: white;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+
+/* ---------------- CALLOUTS ---------------- */
+/* Base Style */
+.callout {
+    padding: 20px;
+    border-radius: 5px;
+    border: solid 1px transparent;
+    margin: 10px 0;
+}
+/* Add for different uses */
+.callout-primary {
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    color: #004085;
+}
+.callout-secondary {
+    background-color: #f5f5f5;
+    border-color: #e3e3e3;
+    color: black;
+}
+
+/*----------- MOBILE FIRST NAVBAR -----------*/
+nav {
+    background-color: black;
+}
+nav .container {
+    padding: 0;
+}
+nav::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+nav span a  {
+    display: block;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+
+nav a {
+    color: lightgrey;
+    padding: 12px 15px;
+    text-decoration: none;
+    display: block;
+}
+nav a:hover {
+    color: white;
+}
+/* PUT YOUR RESPONSIVE NAV STYLES HERE*/
+
+@media screen and (min-width: 600px) {
+    nav span {
+        float: left;
+    }
+    nav ul {
+        float: right;
+    }
+    nav li {
+        float: left;
+    }
+}
+
+
+
+
+/* ---------------- IMAGE STYLES ---------------- */
+img {
+    vertical-align: middle; /*Fixes spacing under images*/
+}
+img.img-fluid {
+    width: 100%; /*Class used to force fit an img in a col*/
+}
+img.img-rounded {
+    border-radius: 10px;
+}
+img.img-circle {
+    border-radius: 50%;
+}
+
+/* ---------------- LAYOUT STYLES ---------------- */
+.container {
+    max-width: 1000px; /*Explain that max width shrinks if it gets too small*/
+    margin: auto;
+    padding: 0 20px; /*Adds a tiny bit of padding so that as the container shrinks it does not touch the edge*/
+}
+
+/* ROWS */
+/* Build clearfix into row */
+.row::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.row {
+    margin: 0 -15px; /*Offset the col-* padding*/
+}
+
+/* COLS */
+/*Mobile First cols*/
+[class*="col-"] {
+    width: 100%;
+    float: left;
+    padding: 10px 15px;
+}
+
+/* PUT YOUR RESPONSIVE COLUMN STYLES HERE */
+
+@media screen and (min-width: 600px) and (max-width: 992px) {
+    .col-md-1 {width: 8.33%}
+    .col-md-2 {width: 16.66%}
+    .col-md-3 {width: 25%}
+    .col-md-4 {width: 33.33%}
+    .col-md-5 {width: 41.66%}
+    .col-md-6 {width: 50%}
+    .col-md-7 {width: 58.33%}
+    .col-md-8 {width: 66.66%}
+    .col-md-9 {width: 75%}
+    .col-md-10 {width: 83.33%}
+    .col-md-11 {width: 91.66%}
+    .col-md-12 {width: 100%}
+}
+
+
+/*end tablet*/
+
+/* Put your Col Styles For Desktops*/
+@media screen and (min-width: 993px){
+    .col-lg-1 {width: 8.33%}
+    .col-lg-2 {width: 16.66%}
+    .col-lg-3 {width: 25%}
+    .col-lg-4 {width: 33.33%}
+    .col-lg-5 {width: 41.66%}
+    .col-lg-6 {width: 50%}
+    .col-lg-7 {width: 58.33%}
+    .col-lg-8 {width: 66.66%}
+    .col-lg-9 {width: 75%}
+    .col-lg-10 {width: 83.33%}
+    .col-lg-11 {width: 91.66%}
+    .col-lg-12 {width: 100%}
+}
+
+
+
+
+/*Col Styles For Tablets*/
+
+/*end tablet*/
+
+/*Col Styles For Desktops*/
+
+/*End Desktop*/
+
+
+/* 
+SIZES:
+
+To do:
+
+1. Add responsive columns on this stylesheet and HTML classes - See widths below
+2. Chang
+e the header for bigger screens
+3. Change the nav for bigger screens
+
+1 {width: 8.33%;}
+2 {width: 16.66%;}
+3 {width: 25%;}
+4 {width: 33.33%;}
+5 {width: 41.66%;}
+6 {width: 50%;}
+7 {width: 58.33%;}
+8 {width: 66.66%;}
+9 {width: 75%;}
+10 {width: 83.33%;}
+11 {width: 91.66%;}
+12 {width: 100%;}
+
+*/
