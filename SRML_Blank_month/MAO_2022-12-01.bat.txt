@@ -1,0 +1,125 @@
+
+rem added perl program to see if it will work - fev	
+rem	2022-02-06 	JTP	Formatted for 01-Sunbeamer (Virtual machine)
+rem 2022-12-01 	JTP Added rain difference routine. 
+rem 2022-12-01	JTP Compute the .txt file on the new sunbeamer
+rem	2022-12-01	JTP Move the .txt file to the old sunbeamer (Not the .dat file)
+
+rem ********************************************************************
+rem Clear the variable values
+set year=
+set month=
+set sn3=
+set sn2=
+set fprocesfolder=
+set sitfilefolder=
+set inputfolder=
+set outputfolder=
+set logfolder=
+set batname=
+
+set parentfolder=
+set station=
+set set datlocation=
+set agrimetlocation=
+
+rem ********************************************************************
+
+rem Convert the cumulative rain values from the agrimet file to rain difference values in the MAO.dat file
+rem Change the directory to the location of the master callouts .py file
+rem cd C:\Users\jpeters4\Dropbox\Python\AgrimetRain
+cd E:\Programs\Python\AgrimetRain
+
+rem Define the parent folder where the data is 
+rem set parentfolder=C:\Users\jpeters4\Dropbox\Python\AgrimetRain\
+set parentfolder=E:\Data\Step1_CampbellRaw\
+
+rem Define the station
+set station=MAO
+set datlocation=%parentfolder%%station%.dat
+set agrimetlocation=%parentfolder%%station%_agrimet.dat
+rem Run the python code that gets rid of the negative rain
+python E:\Programs\Python\AgrimetRain\Agrimet_Negative_Rain_2023-03-14.py %1 %datlocation% %agrimetlocation%
+
+rem ********************************************************************
+
+
+
+rem	Set the date:
+rem	Set current year (00-99)
+set year=%date:~12,2%
+rem To manually set the date (Set this as the current year, two digits)
+rem set year=22
+
+rem	Set current month (01-12)
+set month=%date:~4,2%
+rem To manually set the date (keep this at the month you want to make, two digits)
+rem set month=02
+
+rem Define the station name
+set sn3=MAO
+set sn2=MA
+
+
+rem define locations
+set fprocesfolder=E:\Programs\Pascal\Fproces
+set sitfilefolder=E:\SiteFiles\Sitefile_PreviousFormat
+set inputfolder=E:\Data\Step1_CampbellRaw
+set outputfolder=E:\Data\Step3B_Original_Format
+set logfolder=E:\Log_Files
+set batname=%sn3%_2022-02-15.bat
+
+rem Make sure the RO file exists. Sometimes it is deleted during a previous run
+if not exist %outputfolder%\%sn3%\%sn2%RO%year%%month%.txt (
+	rem if it doesn't exist then create it and move it over to the correct location
+	E:
+	cd E:\SiteFiles
+	E:\Programs\Pascal\CreateBlank\cr1blk.exe %sn2%RO%year%%month%.txt %sn2% %year% %month% Headers\%sn3%_header.txt
+	move E:\SiteFiles\%sn2%RO%year%%month%.txt  %outputfolder%\%sn3%\%sn2%RO%year%%month%.txt
+	echo (year: %year%, month: %month%)
+	
+	
+Rem Need to change to the E drive. (Won't work if you don't)
+E:
+cd \Data\Step3B_Original_Format
+
+rem Process the data for year and month
+rem Takes the .dat file, applies the sitefile, and puts the data into the .txt file
+rem fprocesprogram -- year -- month -- sitefile -- outputlocation -- inputlocation
+%fprocesfolder%\Fproces1a%SN2%.exe %year% %month% %sitfilefolder%\%sn3% %outputfolder%\%sn3%\%sn2%RO%year%%month%.txt %inputfolder%\%sn3%.dat
+
+rem copy the data from new sumbeamer to old sunbeamer
+xcopy /y /q E:\Data\Step3B_Original_Format\%sn3%\%sn2%RO%year%%month%.txt \\sunbeamer\PC208W\%sn2%RO%year%%month%.txt
+
+
+
+rem If there were not errors go to the end of the program
+if not errorlevel 1 goto ENDOFPROGRAM
+
+rem	***** HANDLE ERROR *****
+rem Write to the log file
+echo %date:~4,10% %time% Error in %batname% (Year: %year%, Month: %month%) >> %logfolder%\%sn3%_20%year%-%month%.log
+
+
+:ENDOFPROGRAM
+rem pause
+
+rem Clear the variable values
+set year=
+set month=
+set sn3=
+set sn2=
+set fprocesfolder=
+set sitfilefolder=
+set inputfolder=
+set outputfolder=
+set logfolder=
+set batname=
+
+set parentfolder=
+set station=
+set set datlocation=
+set agrimetlocation=
+
+rem exit the program
+exit
